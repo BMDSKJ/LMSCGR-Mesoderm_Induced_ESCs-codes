@@ -38,7 +38,7 @@ closest_vertex <- as.numeric(names(which.max(table(closest_vertex))))
 mst <- principal_graph(cds)$UMAP
 root_pr_nodes <- igraph::V(mst)$name[closest_vertex]
 
-###################
+#
 rowData(cds)$gene_name <- rownames(cds)
 rowData(cds)$gene_short_name <- rowData(cds)$gene_name
 
@@ -62,4 +62,15 @@ plot_cells(cds, color_cells_by = "cluster", cell_size = 1,
 ES_day8.seur <- as.Seurat(cds, assay = NULL, clusters = "UMAP")
 ES_day8.seur<-AddMetaData(ES_day8.seur,metadata= cds@principal_graph_aux$UMAP$pseudotime,
                           col.name = "monocle3_pseudotime")
- 
+
+FeaturePlot(ES_day8.seur,features = c("Pax7", "Myod1"),
+            reduction ="UMAP",combine = T,
+            blend = TRUE,
+            blend.threshold = 0.0, min.cutoff = 0,
+            max.cutoff = 6)
+
+FeaturePlot(ES_day8.seur,features = c("Myog", "Myod1"),
+            reduction ="UMAP",combine = T,
+            blend = TRUE,
+            blend.threshold = 0.0, min.cutoff = 0,
+            max.cutoff = 6) 
